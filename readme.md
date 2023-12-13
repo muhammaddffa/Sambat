@@ -1,0 +1,1 @@
+request masuk bawa payload dari endpoint tertentu, request endpoint terseburt akan di handle dari function controller/file controller function controller akan memproses request di dalam file service dan akan menghasilkan output yang kemudian di kembalikan ke user sebagai response. jika diperlukan mengakses database maka file service akan dipanggil. 
