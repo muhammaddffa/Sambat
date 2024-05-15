@@ -1,18 +1,18 @@
-const express = require("express");
+// const express = require("express");
 const bcrypt = require("bcrypt");
 
 const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
+const user = prisma.user;
 
-const router = express.Router();
 
 // REGISTER
-router.post("/", async (req, res) => {
+exports.registerUser = async (req, res) => {
   const { name, email, password } = req.body;
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const result = await prisma.user.create({
+    const result = await user.create({
       data: {
         name: name,
         email: email,
@@ -29,6 +29,6 @@ router.post("/", async (req, res) => {
       error: error.message,
     });
   }
-});
+};
 
-module.exports = router;
+

@@ -1,5 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const userRoutes = require("./routes/userRoutes"); 
+const registerRoutes = require("./routes/registerRoutes")
 
 const app = express();
 
@@ -9,23 +11,24 @@ const PORT = process.env.PORT;
 
 app.use(express.json());
 
-const productConttroller = require("./controller/user.controller");
-const postsController = require("./controller/posts.controller");
-const commentController = require("./controller/comment.controller");
-const commentCountController = require("./controller/commentCount.controller");
-const register = require("./controller/register.Controller");
-const login = require("./controller/login.Controller");
+// const productConttroller = require("./controllers/userController");
+// const postsController = require("./controllers/postsController");
+// const commentController = require("./controllers/commentController");
+// const commentCountController = require("./controllers/commentCountController");
+// const register = require("./controllers/registerController");
+// const login = require("./controllers/loginController");
 
 app.get("/", async (req, res) => {
   res.send({ message: "Awesome it works 🐻" });
 });
 
-app.use("/api/users", productConttroller);
-app.use("/api/posts", postsController);
-app.use("/api/comment", commentController);
-app.use("/api/count/comment", commentCountController);
-app.use("/api/register", register);
-app.use("/api/login", login);
+app.use("/auth/register", registerRoutes);
+app.use("/api/users",userRoutes);
+// app.use("/api/posts", postsController);
+// app.use("/api/comment", commentController);
+// app.use("/api/count/comment", commentCountController);
+// app.use("/api/register", register);
+// app.use("/api/login", login);
 
 app.listen(PORT, () => {
   console.log("Express running in port: " + PORT);
