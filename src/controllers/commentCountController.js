@@ -1,14 +1,14 @@
-const express = require("express");
+// const express = require("express");
 const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
-const router = express.Router();
+const Comment = prisma.comment;
 
 // Count comment based on post id
-router.get("/:postId", async (req, res) => {
+exports.countCommentByOnPostId = async (req, res) => {
   try {
     const postId = req.params.postId;
-    const commentCount = await prisma.comment.count({
+    const commentCount = await Comment.count({
       where: {
         postId: postId,
       },
@@ -23,6 +23,4 @@ router.get("/:postId", async (req, res) => {
       error: error.message,
     });
   }
-});
-
-module.exports = router;
+};

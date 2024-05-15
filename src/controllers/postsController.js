@@ -1,15 +1,16 @@
-const express = require("express");
+// const express = require("express");
 const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
-const router = express.Router();
+const Posts = prisma.post;
+// const router = express.Router();
 
 // CREATE Post
-router.post("/", async (req, res) => {
+exports.createPostById =  async (req, res) => {
   const {content, userId} = req.body;
   // const data = req.body;
   try {
-    const result = await prisma.post.create({
+    const result = await Posts.create({
       data:{
         content: content,
         userId: userId
@@ -25,12 +26,13 @@ router.post("/", async (req, res) => {
       error: error.message,
     });
   }
-});
+};
 
 // GET Post
-router.get("/", async (req, res) => {
+exports.getPost =  async (req, res) => {
   try {
-    const result = await prisma.post.findMany({
+    console.log(req.body);
+    const result = await Posts.findMany({
       select: {
         id: true,
         // userId: true,
@@ -47,6 +49,5 @@ router.get("/", async (req, res) => {
       error: error.message,
     });
   }
-});
+};
 
-module.exports = router;

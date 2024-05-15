@@ -1,19 +1,15 @@
-const express = require("express");
 const { PrismaClient } = require("@prisma/client");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const prisma = new PrismaClient();
-
-const router = express.Router();
-
-// const { accessValidation } = require("../middleware/authMiddleware");
+const User = prisma.user;
 
 // Login
-router.post("/", async (req, res) => {
+exports.loginUser =  async (req, res) => {
   const { email, password } = req.body;
   try {
-    const user = await prisma.user.findUnique({
+    const user = await User.findUnique({
       where: {
         email: email,
       },
@@ -65,6 +61,4 @@ router.post("/", async (req, res) => {
       message: "Internal server error",
     });
   }
-});
-
-module.exports = router;
+};

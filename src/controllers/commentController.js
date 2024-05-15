@@ -1,15 +1,14 @@
-const express = require("express");
 const { PrismaClient } = require("@prisma/client"); 
 
 const prisma = new PrismaClient();
-const router = express.Router();
+const Comment = prisma.comment;
 
 // Create Comment
-router.post("/:id", async (req, res) => {
+exports.createCommentByPostId =  async (req, res) => {
   const { comment } = req.body;
   const postId = req.params.id;
   try {
-    const result = await prisma.comment.create({
+    const result = await Comment.create({
       data: {
         postId,
         comment,
@@ -24,13 +23,13 @@ router.post("/:id", async (req, res) => {
       error: error.message,
     });
   }
-});
+};
 
 // GET Comment
 // postId di tambahin
-router.get("/", async (req, res) => {
+exports.getAllComment = async (req, res) => {
   try {
-    const result = await prisma.comment.findMany({
+    const result = await Comment.findMany({
       select: {
         id: true,
         comment: true,
@@ -47,12 +46,13 @@ router.get("/", async (req, res) => {
       error: error.message,
     });
   }
-});
+};
 
-router.get("/:postId", async (req, res) => {
+//GetCommentById
+exports.commentByPostId =  async (req, res) => {
   const { postId } = req.params;
   try {
-    const result = await prisma.comment.findMany({
+    const result = await Comment.findMany({
       where: {
         postId: postId,
       },
@@ -71,6 +71,5 @@ router.get("/:postId", async (req, res) => {
       error: error.message,
     });
   }
-});
+};
 
-module.exports = router;
