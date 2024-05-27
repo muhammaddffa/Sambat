@@ -1,9 +1,7 @@
-// const express = require("express");
 const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 const Posts = prisma.post;
-// const router = express.Router();
 
 // CREATE Post
 exports.createPostById =  async (req, res) => {

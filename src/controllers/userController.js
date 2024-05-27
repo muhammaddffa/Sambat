@@ -1,15 +1,12 @@
 // Layer untuk handle request dan response
 // Sering buat handle validasi body
-
-const { PrismaClient } = require ("@prisma/client");
-
+const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 const user = prisma.user;
 
-// const prisma = new PrismaClient();
-// const router = express.Router();
 
+//CreateUser
 exports.createUser = async (req, res) => {
   try {
     const { name, password, email } = req.body;
@@ -37,6 +34,7 @@ exports.createUser = async (req, res) => {
   }
 };
 
+//Get UserById
 exports.getUserById = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -64,6 +62,7 @@ exports.getUserById = async (req, res) => {
   }
 };
 
+//GetAllUser
 exports.getAllUsers = async (req, res) => {
   try {
     const result = await user.findMany({
