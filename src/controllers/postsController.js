@@ -4,15 +4,15 @@ const prisma = new PrismaClient();
 const Posts = prisma.post;
 
 // CREATE Post
-exports.createPostById =  async (req, res) => {
-  const {content, userId} = req.body;
+exports.createPostById = async (req, res) => {
+  const { content, userId } = req.body;
   // const data = req.body;
   try {
     const result = await Posts.create({
-      data:{
+      data: {
         content: content,
-        userId: userId
-      }
+        userId: userId,
+      },
     });
     res.status(201).send({
       data: result,
@@ -27,9 +27,9 @@ exports.createPostById =  async (req, res) => {
 };
 
 // GET Post
-exports.getPost =  async (req, res) => {
+exports.getPost = async (req, res) => {
   try {
-    console.log(req.body);
+    // console.log(req.body);
     const result = await Posts.findMany({
       select: {
         id: true,
@@ -49,3 +49,25 @@ exports.getPost =  async (req, res) => {
   }
 };
 
+exports.softDeletePost = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const softDeletedPost = await prisma.post.update({
+      where: {
+        id: postId,
+      },
+      data: {
+        isDeleted: true,
+      },
+    });
+    res.status(200).send({
+      message: "Postingan dengan ID telah dihapus sementara",
+      data: softDeletedPost
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error when soft delete",
+      error: error.message,
+    });
+  }
+};

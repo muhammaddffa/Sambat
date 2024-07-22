@@ -1,5 +1,5 @@
 const express = require("express");
-const { getPost, createPostById } = require("../controllers/postsController");
+const { getPost, createPostById, softDeletePost } = require("../controllers/postsController");
 
 
 
@@ -10,6 +10,10 @@ router.post("/", createPostById);
 
 //getAllPost
 router.get("/", getPost);
+
+
+router.put('/:postId/soft-delete', softDeletePost);
+
 
 
 module.exports = router;

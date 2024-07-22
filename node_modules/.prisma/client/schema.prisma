@@ -28,6 +28,7 @@ model Post {
   userId    String?
   createdAt DateTime    @default(now())
   updatedAt DateTime    @default(now())
+  isDeleted Boolean     @default(false)
   comments  Comment[]
 }
 

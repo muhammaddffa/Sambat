@@ -25,6 +25,7 @@ const accessValidation = (req, res, next) => {
     next()
   
   }
+  
   module.exports = {
     accessValidation,
   }

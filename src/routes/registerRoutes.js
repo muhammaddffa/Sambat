@@ -9,4 +9,4 @@ const router = express.Router();
 router.post("/", registerUser)
 
 
-module.exports = router;
+module.exports = router;    
