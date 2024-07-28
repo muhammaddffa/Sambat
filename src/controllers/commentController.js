@@ -1,10 +1,10 @@
-const { PrismaClient } = require("@prisma/client"); 
+const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 const Comment = prisma.comment;
 
 // Create Comment
-exports.createCommentByPostId =  async (req, res) => {
+exports.createCommentByPostId = async (req, res) => {
   const { comment } = req.body;
   const postId = req.params.id;
   try {
@@ -49,7 +49,7 @@ exports.getAllComment = async (req, res) => {
 };
 
 //GetCommentById
-exports.commentByPostId =  async (req, res) => {
+exports.commentByPostId = async (req, res) => {
   const { postId } = req.params;
   try {
     const result = await Comment.findMany({
@@ -57,7 +57,7 @@ exports.commentByPostId =  async (req, res) => {
         postId: postId,
       },
       select: {
-        id: true, 
+        id: true,
         comment: true,
       },
     });
@@ -73,3 +73,23 @@ exports.commentByPostId =  async (req, res) => {
   }
 };
 
+exports.getPaginationComment = async (req, res) => {
+  try {
+    const { skip, take } = req.params;
+
+    // Konversi params menjadi angka
+    const skipNum = parseInt(skip);
+    const takeNum = parseInt(take);
+
+    const result = await Comment.findMany({
+      skip: skipNum,
+      take: takeNum,
+    });
+    res.status(200).send({
+      message: "get try pagination",
+      data: result,
+    });
+  } catch (e) {
+    console.log;
+  }
+};
