@@ -6,6 +6,7 @@ const loginRoutes = require("./routes/loginRoutes");
 const post = require("./routes/postsRoutes");
 const comment = require("./routes/commentRoutes");
 const countCommentBasedOnPostId = require("./routes/commentCountRoutes");
+const likeRoutes = require ("./routes/likeRoutes")
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use("/auth/login", loginRoutes);
 app.use("/api/posts", post);
 app.use("/api/comment", comment);
 app.use("/api/count", countCommentBasedOnPostId);
+app.use("/api/like", likeRoutes);
 
 app.listen(PORT, () => {
   console.log("Express running in port: " + PORT);
