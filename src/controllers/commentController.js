@@ -14,9 +14,10 @@ exports.createCommentByPostId = async (req, res) => {
         comment,
       },
     });
-    res
-      .status(201)
-      .send({ data: result, message: "Create comment succesfuly" });
+    res.status(201).send({
+      data: result,
+      message: "Create comment succesfuly",
+    });
   } catch (error) {
     res.status(500).json({
       message: "Error post users",
@@ -77,7 +78,6 @@ exports.getPaginationComment = async (req, res) => {
   try {
     const { skip, take } = req.params;
 
-    // Konversi params menjadi angka
     const skipNum = parseInt(skip);
     const takeNum = parseInt(take);
 
@@ -89,7 +89,10 @@ exports.getPaginationComment = async (req, res) => {
       message: "get try pagination",
       data: result,
     });
-  } catch (e) {
-    console.log;
+  } catch (error) {
+    res.status(500).json({
+      message: "error get pagination",
+      error: error.message,
+    });
   }
 };

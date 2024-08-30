@@ -1,4 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
+const { HTTP_STATUS } = require("../constants/http.status");
+const { SUCCESS, ERROR } = require("../constants/message");
 
 const prisma = new PrismaClient();
 const Posts = prisma.post;
@@ -39,12 +41,13 @@ exports.getPost = async (req, res) => {
     });
     res.status(201).send({
       data: result,
-      message: "Get all post Succceess",
+      message: SUCCESS.GET_POSTINGAN_SUCCESS,
+      Response: HTTP_STATUS.STATUS_OK,
     });
   } catch (error) {
     res.status(500).json({
-      message: "Error fetching users",
-      error: error.message,
+      message: ERROR.ERROR_GET_POSTINGAN,
+      error: HTTP_STATUS.STATUS_BAD_REQUEST,
     });
   }
 };
@@ -57,7 +60,6 @@ exports.softDeletePost = async (req, res) => {
         id: postId,
       },
       data: {
-        isDeleted: true,
         deletedAt: new Date(),
       },
     });
@@ -73,6 +75,7 @@ exports.softDeletePost = async (req, res) => {
   }
 };
 
+// Get list post detail
 exports.getPostDetail = async (req, res) => {
   const { postId } = req.params;
   try {
@@ -113,7 +116,7 @@ exports.getPostDetail = async (req, res) => {
 
     if (!post) {
       return res.status(404).json({
-        message: `Post with ID ${postId} not found.`,
+        message: `Post with ID post not found.`,
       });
     }
 
