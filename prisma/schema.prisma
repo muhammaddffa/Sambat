@@ -1,3 +1,6 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -31,7 +34,6 @@ model Post {
   likes     Like[]
   user      User?     @relation(fields: [userId], references: [id])
 
-  @@index([userId], map: "Post_userId_fkey")
 }
 
 model Comment {
@@ -44,8 +46,7 @@ model Comment {
   post      Post     @relation(fields: [postId], references: [id])
   user      User?    @relation(fields: [userId], references: [id])
 
-  @@index([postId], map: "Comment_postId_fkey")
-  @@index([userId], map: "Comment_userId_fkey")
+  
 }
 
 model Like {
@@ -56,6 +57,5 @@ model Like {
   post      Post     @relation(fields: [postId], references: [id])
   user      User     @relation(fields: [userId], references: [id])
 
-  @@index([postId], map: "Like_postId_fkey")
-  @@index([userId], map: "Like_userId_fkey")
+  
 }

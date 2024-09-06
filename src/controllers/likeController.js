@@ -43,7 +43,7 @@ exports.addLikePostingan = async (req, res) => {
 
 exports.removeLike = async (req, res) => {
     try {
-        const {postId, userId} = req.body
+        const { postId, userId } = req.body
 
         // Mengecek apakah pengguna sudah menyukai postingan
         const existingLike = await prisma.like.findFirst({
@@ -53,7 +53,7 @@ exports.removeLike = async (req, res) => {
             }
         })
 
-        if(existingLike) {
+        if (existingLike) {
             return res.status(400).send({
                 message: "Users have liked this post"
             })
@@ -71,6 +71,26 @@ exports.removeLike = async (req, res) => {
     } catch (error) {
         res.status(500).send({
             message: "Error Removing like",
+            error: error.message,
+        });
+    }
+}
+
+exports.countLike = async (req, res) => {
+    try {
+        const postId = req.params.postId
+        const likeCount = await prisma.like.count({
+            where: {
+                postId: postId
+            }
+        })
+        res.status(201).send({
+            count: likeCount,
+            message: "Count Like",
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Error count like",
             error: error.message,
         });
     }
