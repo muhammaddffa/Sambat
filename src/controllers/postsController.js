@@ -14,6 +14,7 @@ exports.createPostById = async (req, res) => {
       data: {
         content: content,
         userId: userId,
+
       },
     });
     res.status(201).send({
@@ -35,7 +36,7 @@ exports.getPost = async (req, res) => {
     const result = await Posts.findMany({
       select: {
         id: true,
-        // userId: true,
+        userId: true,
         content: true,
       },
     });
@@ -74,6 +75,31 @@ exports.softDeletePost = async (req, res) => {
     });
   }
 };
+
+// category postingan
+exports.getPostByCategory = async (req, res) => {
+  const { categoryId } = req.params
+  try {
+      const posts = await prisma.post.findMany({
+          where: {
+              categoryId,
+          },
+          include: {
+              category: true,
+              user: true
+          }
+      })
+      res.status(200).send({
+          posts: posts,
+          message: "Daftar postingan berdasarkan kategori berhasil diambil.",
+      });
+  } catch (error) {
+      res.status(500).json({
+          message: "Error fecthing posts by category",
+          error: error.message,
+      });
+  }
+}
 
 // Get list post detail
 exports.getPostDetail = async (req, res) => {

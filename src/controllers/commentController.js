@@ -5,12 +5,13 @@ const Comment = prisma.comment;
 
 // Create Comment
 exports.createCommentByPostId = async (req, res) => {
-  const { comment } = req.body;
+  const { comment, userId} = req.body;
   const postId = req.params.id;
   try {
     const result = await Comment.create({
       data: {
         postId,
+        userId,
         comment,
       },
     });
@@ -33,6 +34,8 @@ exports.getAllComment = async (req, res) => {
     const result = await Comment.findMany({
       select: {
         id: true,
+        postId: true,
+        userId: true,
         comment: true,
       },
     });

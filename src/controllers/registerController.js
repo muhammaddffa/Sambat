@@ -20,7 +20,7 @@ exports.registerUser = async (req, res) => {
     });
     res.status(201).send({
     data: result,
-    message: `User Created`,
+    message: `User succesfully for register`,
     });
   } catch (error) {
     res.status(500).send({
