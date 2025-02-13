@@ -1,12 +1,11 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const userRoutes = require("./routes/userRoutes");
-const registerRoutes = require("./routes/registerRoutes");
-const loginRoutes = require("./routes/loginRoutes");
+const authRoutes = require("./routes/authRoutes")
 const post = require("./routes/postsRoutes");
 const comment = require("./routes/commentRoutes");
 const countCommentBasedOnPostId = require("./routes/commentCountRoutes");
-const likeRoutes = require ("./routes/likeRoutes")
+const likeRoutes = require("./routes/likeRoutes")
 const categoryRoutes = require('./routes/categoryRoutes')
 
 const app = express();
@@ -21,9 +20,8 @@ app.get("/", async (req, res) => {
   res.send({ message: "Awesome it works 🐻" });
 });
 
-app.use("/auth/register", registerRoutes);
 app.use("/api/users", userRoutes);
-app.use("/auth/login", loginRoutes);
+app.use("/auth/api", authRoutes);
 app.use("/api/posts", post);
 app.use("/api/comment", comment);
 app.use("/api/count", countCommentBasedOnPostId);

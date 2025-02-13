@@ -11,31 +11,31 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(uuid())
-  name      String?
-  password  String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @default(now())
-  email     String    @unique(map: "email")
-  comments  Comment[]
-  likes     Like[]
-  posts     Post[]
+  id           String    @id @default(uuid())
+  name         String?
+  password     String
+  refreshToken String?   @db.Text
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @default(now())
+  email        String    @unique(map: "email")
+  comments     Comment[]
+  likes        Like[]
+  posts        Post[]
 }
 
 model Post {
-  id          String    @id @default(uuid())
-  content     String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @default(now())
-  userId      String?
-  isDeleted   Boolean   @default(false)
-  deletedAt   DateTime?
-  comments    Comment[]
-  likes       Like[]
-  user        User?     @relation(fields: [userId], references: [id])
-  category    Category  @relation(fields: [categoryId], references: [id])
-  categoryId  String
-
+  id         String    @id @default(uuid())
+  content    String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @default(now())
+  userId     String?
+  isDeleted  Boolean   @default(false)
+  deletedAt  DateTime?
+  comments   Comment[]
+  likes      Like[]
+  user       User?     @relation(fields: [userId], references: [id])
+  category   Category  @relation(fields: [categoryId], references: [id])
+  categoryId String
 }
 
 model Comment {
@@ -59,7 +59,7 @@ model Like {
 }
 
 model Category {
-  id      String @id @default(uuid())
-  name      String   @unique
-  posts     Post[]
+  id    String @id @default(uuid())
+  name  String @unique
+  posts Post[]
 }
